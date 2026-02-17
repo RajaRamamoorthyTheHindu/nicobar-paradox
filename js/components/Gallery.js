@@ -1,7 +1,13 @@
+/**
+ * Species gallery component with filtering, modal details, and keyboard accessibility.
+ * @module Gallery
+ */
+
 import { speciesData } from '../data/speciesData.js';
 import { gameAnalytics } from '../utils/analytics.js';
 import { logError } from '../utils/errorHandler.js';
 
+/** @class Gallery - Filterable species gallery with accessible modal for species details. */
 export class Gallery {
   constructor() {
     this.activeFilter = 'all';
@@ -9,6 +15,7 @@ export class Gallery {
     this.init();
   }
 
+  /** Initialize filters, render species cards, set up modal and observation. */
   init() {
     this.createFilters();
     this.renderSpecies();
@@ -16,6 +23,7 @@ export class Gallery {
     this.observeSection();
   }
 
+  /** Create filter buttons for species categories. */
   createFilters() {
     const container = document.querySelector('.gallery-filters');
 
@@ -32,6 +40,11 @@ export class Gallery {
     });
   }
 
+  /**
+   * Create a single filter button element.
+   * @param {{id: string, label: string}} filter - Filter configuration.
+   * @returns {HTMLButtonElement} The filter button element.
+   */
   createFilterButton(filter) {
     const button = document.createElement('button');
     button.className = `filter-button ${filter.id === this.activeFilter ? 'active' : ''}`;
@@ -41,6 +54,10 @@ export class Gallery {
     return button;
   }
 
+  /**
+   * Filter the species grid by category and update button states.
+   * @param {string} category - The category to filter by ('all', 'marine', 'terrestrial', 'avian').
+   */
   filterSpecies(category) {
     this.activeFilter = category;
 
@@ -53,6 +70,7 @@ export class Gallery {
     this.renderSpecies();
   }
 
+  /** Render species cards into the grid based on the active filter. */
   renderSpecies() {
     const container = document.querySelector('.species-grid');
     container.innerHTML = '';
@@ -67,6 +85,11 @@ export class Gallery {
     });
   }
 
+  /**
+   * Create an accessible species card element.
+   * @param {import('../data/speciesData.js').Species} species - Species data.
+   * @returns {HTMLElement} The species card element.
+   */
   createSpeciesCard(species) {
     const card = document.createElement('div');
     card.className = 'species-card';
@@ -141,6 +164,7 @@ export class Gallery {
     return card;
   }
 
+  /** Set up click-outside and close-button handlers for the modal. */
   setupModal() {
     document.addEventListener('click', (e) => {
       if (e.target.classList.contains('modal') || e.target.classList.contains('modal-close')) {
@@ -149,6 +173,7 @@ export class Gallery {
     });
   }
 
+  /** Close the species detail modal, restore focus, and remove keyboard handlers. */
   closeModal() {
     this.modal.classList.remove('active');
     this.modal.setAttribute('aria-hidden', 'true');
@@ -166,6 +191,11 @@ export class Gallery {
     }
   }
 
+  /**
+   * Open the modal with detailed species information.
+   * Manages focus trap and keyboard navigation for accessibility.
+   * @param {import('../data/speciesData.js').Species} species - Species to display.
+   */
   showSpeciesDetails(species) {
     try {
       this.previouslyFocused = document.activeElement;
@@ -289,6 +319,7 @@ export class Gallery {
     }
   }
 
+  /** Set up IntersectionObserver to trigger fade-in on the gallery section. */
   observeSection() {
     const observer = new IntersectionObserver(
       (entries) => {

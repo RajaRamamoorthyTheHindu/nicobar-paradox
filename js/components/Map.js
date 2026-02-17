@@ -1,7 +1,14 @@
+/**
+ * Interactive Mapbox GL map component.
+ * Displays satellite imagery of Great Nicobar with toggleable data layers.
+ * @module MapComponent
+ */
+
 import { CONFIG } from '../config.js';
 import { mapData, mapLayers } from '../data/mapData.js';
 import { logError, renderFallback } from '../utils/errorHandler.js';
 
+/** @class MapComponent - Mapbox GL JS integration with layer controls and satellite imagery. */
 export class MapComponent {
   constructor() {
     this.mapbox = null;
@@ -9,6 +16,7 @@ export class MapComponent {
     this.init();
   }
 
+  /** Initialize the map, create layer controls, and set up section observation. */
   init() {
     // Wait for Mapbox GL JS to load
     if (typeof mapboxgl === 'undefined') {
@@ -23,6 +31,7 @@ export class MapComponent {
     this.observeSection();
   }
 
+  /** Create the Mapbox GL map instance and configure error handling. */
   initMap() {
     if (!mapboxgl) {
       console.error('Mapbox GL JS not loaded');
@@ -48,6 +57,7 @@ export class MapComponent {
     }
   }
 
+  /** Add all GeoJSON data sources and their visual layers to the map. */
   addLayers() {
     if (!this.mapbox) return;
 
@@ -62,6 +72,10 @@ export class MapComponent {
     });
   }
 
+  /**
+   * Add fill and line layers for a GeoJSON source.
+   * @param {string} id - The source/layer identifier.
+   */
   addLayerStyles(id) {
     if (!this.mapbox) return;
 
@@ -89,6 +103,7 @@ export class MapComponent {
     });
   }
 
+  /** Create the layer toggle control panel. */
   createControls() {
     const container = document.getElementById('layer-controls');
     if (!container) return;
@@ -99,6 +114,11 @@ export class MapComponent {
     });
   }
 
+  /**
+   * Create a toggle button for a map layer.
+   * @param {import('../data/mapData.js').MapLayer} layer - Layer configuration.
+   * @returns {HTMLButtonElement} The layer toggle button element.
+   */
   createLayerButton(layer) {
     const button = document.createElement('button');
     button.className = `layer-button ${this.activeLayers.includes(layer.id) ? 'active' : ''}`;
@@ -142,6 +162,10 @@ export class MapComponent {
     return button;
   }
 
+  /**
+   * Toggle visibility of a map layer and update the button state.
+   * @param {string} layerId - The layer identifier to toggle.
+   */
   toggleLayer(layerId) {
     if (!this.mapbox) return;
 
@@ -162,6 +186,7 @@ export class MapComponent {
     }
   }
 
+  /** Set up IntersectionObserver to trigger fade-in on the map section. */
   observeSection() {
     const observer = new IntersectionObserver(
       (entries) => {
