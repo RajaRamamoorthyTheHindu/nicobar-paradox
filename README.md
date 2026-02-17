@@ -92,6 +92,142 @@ The built files will be in the `dist` directory.
 - Make strategic decisions that affect the island's future
 - Try to maintain all metrics above 50% to achieve victory
 
+## 🎮 Game Mechanics Deep Dive
+
+### Core Gameplay Loop
+
+The Great Nicobar Paradox game is a turn-based decision-making simulation where players take on the role of a project manager overseeing the ₹81,800 crore development project. Each turn represents a significant phase of the project timeline.
+
+### Resource Management
+
+#### Budget System
+- **Starting Budget**: ₹81,800 crores (based on real project allocation)
+- **Budget Depletion**: Each decision costs money, reflecting real-world project expenses
+- **Budget Tracking**: Real-time display of remaining funds
+- **Bankruptcy Condition**: Game ends if budget reaches zero
+
+#### Three-Pillar Metric System
+
+**Social Impact (Purple Bar)**
+- Represents community welfare, indigenous rights, and public approval
+- Affected by: Community engagement, relocation programs, cultural preservation
+- High Social Impact: Happy communities, preserved traditions, local support
+- Low Social Impact: Displaced communities, cultural loss, public protests
+
+**Economic Growth (Yellow Bar)**
+- Represents job creation, infrastructure development, and economic benefits
+- Affected by: Port construction, urban development, industrial projects
+- High Economic Growth: Job opportunities, increased trade, regional prosperity
+- Low Economic Growth: Limited opportunities, investor concerns, economic stagnation
+
+**Environmental Health (Green Bar)**
+- Represents ecosystem preservation, biodiversity, and ecological balance
+- Affected by: Conservation measures, deforestation, marine protection
+- High Environmental Health: Protected habitats, thriving wildlife, sustainable practices
+- Low Environmental Health: Habitat destruction, species extinction, ecological collapse
+
+### Decision Framework
+
+#### Available Decisions
+
+**1. Build Port Infrastructure**
+- **Cost**: ₹15,000 crores
+- **Effects**: Social -20, Economic +25, Ecology -30
+- **Description**: Construct deep-water port and shipping facilities
+- **Real-world Impact**: Major economic driver but devastating to marine ecosystems
+- **Strategic Consideration**: High-cost, high-reward option with severe environmental consequences
+
+**2. Implement Conservation Measures**
+- **Cost**: ₹8,000 crores
+- **Effects**: Social -15, Economic -25, Ecology +20
+- **Description**: Establish protected areas and wildlife corridors
+- **Real-world Impact**: Preserves biodiversity but slows development progress
+- **Strategic Consideration**: Environmental investment that may frustrate stakeholders
+
+**3. Expand Urban Development**
+- **Cost**: ₹12,000 crores
+- **Effects**: Social -25, Economic +30, Ecology -35
+- **Description**: Build housing and commercial zones
+- **Real-world Impact**: Creates infrastructure but consumes pristine forest land
+- **Strategic Consideration**: Balanced cost with mixed social reception
+
+**4. Focus on Social Programs**
+- **Cost**: ₹5,000 crores
+- **Effects**: Social +20, Economic -20, Ecology -15
+- **Description**: Invest in community welfare and relocation support
+- **Real-world Impact**: Improves community relations but delays project timelines
+- **Strategic Consideration**: Lowest cost option for maintaining social stability
+
+### Victory and Defeat Conditions
+
+#### Victory Requirements (All must be met)
+1. **Metric Threshold**: All three metrics (Social, Economic, Environmental) must remain above 50%
+2. **Turn Completion**: Successfully complete all 10 turns
+3. **Budget Management**: Maintain positive budget balance
+4. **Balanced Approach**: Demonstrate sustainable development practices
+
+#### Defeat Scenarios
+1. **Social Collapse** (Social ≤ 30%): Communities revolt, project faces massive opposition
+2. **Ecological Collapse** (Ecology ≤ 30%): Environmental destruction triggers legal challenges
+3. **Economic Collapse** (Economic ≤ 30%): Investors withdraw, project becomes unviable
+4. **Budget Depletion** (Budget ≤ 0): Financial resources exhausted, project halted
+5. **Time Expiration**: Failed to maintain balance across all 10 turns
+
+### Strategic Gameplay Elements
+
+#### Decision Timing
+- **Early Game**: Focus on establishing foundation while maintaining balance
+- **Mid Game**: Navigate increasing complexity and competing demands
+- **Late Game**: Manage consequences of earlier decisions while staying within budget
+
+#### Risk vs. Reward Analysis
+- **High-Cost Decisions**: Offer greater impact but limit future options
+- **Balanced Decisions**: Moderate effects across multiple metrics
+- **Emergency Decisions**: React to critical metric drops
+
+#### Notification System
+- **Real-time Feedback**: Immediate consequences of each decision
+- **Contextual Messages**: Explain the real-world implications
+- **Progress Tracking**: Visual indicators of metric changes
+
+### Educational Objectives
+
+#### Learning Outcomes
+1. **Complexity Awareness**: Understanding the interconnected nature of development decisions
+2. **Trade-off Recognition**: Realizing that every choice has multiple consequences
+3. **Stakeholder Perspective**: Appreciating different viewpoints (economic, social, environmental)
+4. **Resource Constraints**: Managing limited budgets in large-scale projects
+5. **Long-term Thinking**: Considering cumulative effects over time
+
+#### Real-world Parallels
+- **Actual Budget**: Game budget matches real project allocation
+- **Realistic Consequences**: Effects mirror documented environmental and social impacts
+- **Stakeholder Conflicts**: Decisions reflect real tensions between development and conservation
+- **Time Pressure**: Turn-based system simulates project timeline constraints
+
+### Difficulty and Accessibility
+
+#### Difficulty Scaling
+- **Beginner-Friendly**: Clear instructions and tooltips
+- **Strategic Depth**: Multiple viable approaches to victory
+- **Replayability**: Different strategies lead to different outcomes
+
+#### Accessibility Features
+- **Visual Indicators**: Color-coded metrics with numerical values
+- **Hover Information**: Detailed decision descriptions
+- **Progress Feedback**: Clear victory/defeat conditions
+- **Restart Option**: Learn from mistakes and try new approaches
+
+### Performance Metrics
+
+The game tracks various metrics for educational analysis:
+- **Decision Patterns**: Which choices players make most frequently
+- **Success Rates**: Percentage of players achieving victory
+- **Failure Points**: Common scenarios leading to defeat
+- **Engagement Time**: How long players spend with the simulation
+
+This comprehensive game system transforms complex environmental and development issues into an engaging, educational experience that highlights the real challenges faced in balancing progress with preservation.
+
 ### Timeline Explorer
 - Scroll through the timeline to see historical events
 - View images and quotes from different time periods
