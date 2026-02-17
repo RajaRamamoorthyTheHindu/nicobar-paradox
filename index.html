@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Great Nicobar Paradox</title>
+  <link rel="icon" type="image/svg+xml" href="/vite.svg">
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-MSXP46EF6N"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-MSXP46EF6N');
+  </script>
+  <!-- Styles -->
+  <link rel="stylesheet" href="/styles/main.css">
+  <link rel="stylesheet" href="/styles/game.css">
+  <link rel="stylesheet" href="/styles/timeline.css">
+  <link rel="stylesheet" href="/styles/map.css">
+  <link rel="stylesheet" href="/styles/gallery.css">
+  <!-- Mapbox GL JS -->
+  <link href='https://api.mapbox.gl/mapbox-gl.css' rel='stylesheet' />
+</head>
+<body>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>The Great Nicobar Paradox</h1>
+      <p>Explore the story of Great Nicobar, where progress meets irreversible loss</p>
+      <button id="start-experience" class="btn btn-primary">
+        Start Experience
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+      </button>
+    </div>
+  </section>
+
+  <!-- Game Section -->
+  <section id="game-section" class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>The Great Nicobar Paradox</h2>
+        <p>Take control of the ₹81,800 crore development project. Can you balance progress with preservation?</p>
+      </div>
+      <div id="game-canvas"></div>
+      <div class="game-instructions">
+        <div class="instruction-block">
+          <h3>How to Play</h3>
+          <ul>
+            <li>Manage your ₹81,800 crore budget wisely</li>
+            <li>Balance environmental impact with development needs</li>
+            <li>Maintain public approval through community engagement</li>
+            <li>Make strategic decisions that shape Great Nicobar's future</li>
+          </ul>
+        </div>
+        <div class="instruction-block">
+          <h3>Victory Conditions</h3>
+          <ul>
+            <li>Keep all metrics (Social, Economic, Environmental) above 50%</li>
+            <li>Complete all 10 turns while maintaining balance</li>
+            <li>Stay within your allocated budget</li>
+          </ul>
+        </div>
+        <div class="instruction-block">
+          <h3>Game Controls</h3>
+          <ul>
+            <li>Click decision buttons to take actions</li>
+            <li>Hover over buttons to see detailed effects</li>
+            <li>Monitor your progress through status bars</li>
+            <li>Watch for crisis events that may disrupt your plans</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Timeline Section -->
+  <section id="timeline" class="section bg-gray">
+    <div class="container">
+      <div class="section-header">
+        <h2>A Land in Flux</h2>
+        <p>Witness the transformation of Great Nicobar through time, from an untouched paradise to a contested ground of development.</p>
+      </div>
+      <div class="timeline-container">
+        <div class="timeline-line"></div>
+        <!-- Timeline events will be inserted here by JavaScript -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Map Section -->
+  <section id="map-section" class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>The Vanishing Nicobar</h2>
+        <p>Explore the transformation of Great Nicobar Island through different time periods.
+          Toggle layers to visualize the impact of development on this pristine ecosystem.</p>
+      </div>
+      <div class="map-container">
+        <div class="map-controls">
+          <div class="map-layers">
+            <h3>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 h1 v1 h-1 v-1"/><path d="M12 7 h1 v1 h-1 v-1"/><path d="M12 12 h1 v1 h-1 v-1"/><path d="M12 17 h1 v1 h-1 v-1"/></svg>
+              Map Layers
+            </h3>
+            <div id="layer-controls">
+              <!-- Layer controls will be inserted here by JavaScript -->
+            </div>
+          </div>
+        </div>
+        <div id="map"></div>
+      </div>
+      <p class="map-note">Note: This visualization uses satellite imagery to show the approximate impact zones.
+        Actual development areas may vary.</p>
+    </div>
+  </section>
+
+  <!-- Gallery Section -->
+  <section id="endangered-species" class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Vanishing Treasures</h2>
+        <p>Meet the extraordinary creatures of Great Nicobar, each fighting for survival
+          against the tide of development.</p>
+      </div>
+      <div class="gallery-filters">
+        <!-- Filters will be inserted here by JavaScript -->
+      </div>
+      <div class="species-grid">
+        <!-- Species cards will be inserted here by JavaScript -->
+      </div>
+      <div class="read-more-section">
+        <div class="read-more-header">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          <h3>Dive Deeper</h3>
+        </div>
+        <p>Explore comprehensive coverage of the Great Nicobar development project and its impact on this unique ecosystem:</p>
+        <div class="article-grid">
+          <!-- Article cards will be inserted here by JavaScript -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modal -->
+  <div id="species-modal" class="modal">
+    <!-- Modal content will be inserted here by JavaScript -->
+  </div>
+
+  <!-- Scripts -->
+  <!-- Load external dependencies first -->
+  <script src="https://cdn.jsdelivr.net/npm/phaser@3.80.1/dist/phaser.min.js"></script>
+  <script src='https://api.mapbox.gl/mapbox-gl-js.min.js'></script>
+  
+  <!-- Then load our application scripts -->
+  <script src="/js/utils/analytics.js"></script>
+  <script src="/js/data/speciesData.js"></script>
+  <script src="/js/data/timelineData.js"></script>
+  <script src="/js/data/mapData.js"></script>
+  <script src="/js/components/Hero.js"></script>
+  <script src="/js/components/Game.js"></script>
+  <script src="/js/components/Timeline.js"></script>
+  <script src="/js/components/Map.js"></script>
+  <script src="/js/components/Gallery.js"></script>
+  <script src="/js/main.js"></script>
+</body>
+</html>

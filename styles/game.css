@@ -1,0 +1,156 @@
+/* Game Section Styles */
+.game-container {
+  max-width: 1024px;
+  margin: 0 auto;
+}
+
+#game-canvas {
+  width: 100%;
+  aspect-ratio: 4/3;
+  background: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  margin-bottom: 3rem;
+}
+
+.game-instructions {
+  background: var(--bg-secondary);
+  border-radius: 0.5rem;
+  padding: 2rem;
+  border: 1px solid var(--border);
+}
+
+.instruction-block {
+  margin-bottom: 2rem;
+}
+
+.instruction-block:last-child {
+  margin-bottom: 0;
+}
+
+.instruction-block h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.instruction-block ul {
+  list-style: none;
+}
+
+.instruction-block li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.75rem;
+}
+
+.instruction-block li::before {
+  content: '';
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--primary);
+}
+
+/* Game UI Elements */
+.status-bar {
+  width: 200px;
+  height: 20px;
+  background: #eee;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+.status-bar-fill {
+  height: 100%;
+  background: var(--primary);
+  transition: width 0.5s ease;
+}
+
+.game-button {
+  width: 100%;
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+  border: 1px solid var(--primary);
+  border-radius: 0.5rem;
+  background: transparent;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.game-button:hover {
+  background: rgba(183, 8, 13, 0.1);
+}
+
+.game-button:disabled {
+  border-color: #ccc;
+  color: #999;
+  cursor: not-allowed;
+}
+
+.notification {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: white;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transform: translateX(100%);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.notification.active {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+/* Game Over Overlay */
+.game-over {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.95);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+  padding: 2rem;
+}
+
+.game-over h2 {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+}
+
+.game-over-stats {
+  margin-bottom: 2rem;
+}
+
+.game-over-message {
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+  max-width: 600px;
+}
+
+.play-again {
+  background: var(--primary);
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.play-again:hover {
+  background: #95030A;
+  transform: scale(1.05);
+}

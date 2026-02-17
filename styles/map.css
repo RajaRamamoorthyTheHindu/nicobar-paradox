@@ -1,0 +1,105 @@
+/* Map Section Styles */
+.map-container {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.map-controls {
+  width: 25%;
+  min-width: 250px;
+}
+
+#map {
+  flex-grow: 1;
+  height: 600px;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.map-layers {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+.map-layers h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.map-layers svg {
+  color: var(--primary);
+}
+
+.layer-button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem;
+  margin-bottom: 0.5rem;
+  border-radius: 0.5rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.layer-button:hover {
+  background: var(--bg-secondary);
+}
+
+.layer-button.active {
+  background: var(--bg-secondary);
+}
+
+.layer-info {
+  text-align: left;
+}
+
+.layer-name {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.layer-description {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.layer-icon {
+  color: var(--text-secondary);
+}
+
+.layer-button.active .layer-icon {
+  color: var(--primary);
+}
+
+.map-note {
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+}
+
+@media (max-width: 1024px) {
+  .map-container {
+    flex-direction: column;
+  }
+
+  .map-controls {
+    width: 100%;
+  }
+
+  #map {
+    height: 400px;
+  }
+}
