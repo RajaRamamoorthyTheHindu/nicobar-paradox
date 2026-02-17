@@ -40,7 +40,8 @@ This file provides context for AI assistants working on this project.
 ### Build & Development
 - **Vite** - Module bundler and dev server (port 5173)
 - **TypeScript Compiler** - Type checking before build
-- **ESLint** - Linting for TypeScript files only
+- **ESLint** - Linting for TypeScript and JavaScript files
+- **Vitest** - Unit testing framework (jsdom environment)
 - **PostCSS + Autoprefixer** - CSS preprocessing
 
 ---
@@ -54,7 +55,7 @@ This file provides context for AI assistants working on this project.
 1. **Vanilla JavaScript** (PRIMARY - currently used)
    - Location: `/js/components/`, `/styles/`, `index.html`
    - Status: Active, rendered in browser
-   - Approach: Class-based components, global window object
+   - Approach: Class-based components, ES6 module imports/exports
 
 2. **React/TypeScript** (SECONDARY - reference only)
    - Location: `/src/components/`
@@ -67,19 +68,30 @@ This file provides context for AI assistants working on this project.
 
 ```
 js/
-├── main.js                 # Application entry point
+├── main.js                 # Application entry point (ES6 module)
+├── config.js               # Application configuration constants
 ├── components/
 │   ├── Hero.js            # Landing section (introduction)
-│   ├── Game.js            # Phaser 3 game simulation (423 lines)
+│   ├── Game.js            # Phaser 3 game simulation
 │   ├── Timeline.js        # Historical events visualization
 │   ├── Map.js             # Mapbox GL interactive map
 │   └── Gallery.js         # Species gallery with filtering
+├── constants/
+│   └── gameConstants.js   # Game decision data and effects
 ├── data/
 │   ├── speciesData.js     # 650+ endangered species data
 │   ├── timelineData.js    # Historical transformation events
 │   └── mapData.js         # Geographic data and layers
+├── services/
+│   ├── gameLogic.js       # Pure game logic functions
+│   └── __tests__/
+│       └── gameLogic.test.js  # Game logic unit tests (25 tests)
 └── utils/
-    └── analytics.js       # Google Analytics wrapper
+    ├── analytics.js       # Google Analytics wrapper
+    ├── errorHandler.js    # Error logging, fallback UI, CDN checks
+    └── __tests__/
+        ├── analytics.test.js      # Analytics unit tests (7 tests)
+        └── errorHandler.test.js   # Error handler unit tests (16 tests)
 ```
 
 ### Component Structure (React/TypeScript - Reference)
@@ -165,24 +177,32 @@ src/
 
 **Current State**:
 - ✅ ESLint configured for TypeScript files (`.ts`, `.tsx`)
-- ❌ ESLint NOT configured for vanilla JavaScript files (`.js`)
+- ✅ ESLint configured for vanilla JavaScript files (`.js`) with `sourceType: 'module'`
 - ❌ No Prettier configuration
 - ❌ No pre-commit hooks
 
 **Run Linting**:
 ```bash
-npm run lint  # Only checks TypeScript files
+npm run lint  # Checks both TypeScript and JavaScript files
 ```
 
 ### Testing
 
 **Current State**:
-- ❌ **NO TESTING INFRASTRUCTURE**
-- No test files exist
-- No testing frameworks installed
-- No test scripts in package.json
+- ✅ **Vitest** installed and configured (jsdom environment)
+- ✅ 48 tests across 3 test files
+- ✅ `npm test` script configured in package.json
 
-**Critical Gap**: This is a production-blocking issue requiring immediate attention.
+**Test Files**:
+- `js/services/__tests__/gameLogic.test.js` — 25 tests (game logic, metrics, budget, victory/defeat)
+- `js/utils/__tests__/analytics.test.js` — 7 tests (event tracking, error handling)
+- `js/utils/__tests__/errorHandler.test.js` — 16 tests (logging, fallback UI, CDN checks)
+
+**Run Tests**:
+```bash
+npm test       # Run all tests once
+npm run test   # Same as above
+```
 
 ---
 
@@ -210,7 +230,13 @@ npm run preview  # Preview the production build locally
 ### Lint Code
 
 ```bash
-npm run lint  # ESLint for TypeScript files only
+npm run lint  # ESLint for TypeScript and JavaScript files
+```
+
+### Run Tests
+
+```bash
+npm test  # Runs Vitest (48 tests across 3 files)
 ```
 
 ---
@@ -269,10 +295,11 @@ Game ends if:
 
 ### Must Read Before Editing
 
-1. **`js/components/Game.js`** (423 lines)
+1. **`js/components/Game.js`**
    - Active game implementation using Phaser 3
-   - Contains all decision logic and game state
-   - Uses global `window.gameInstance` (anti-pattern)
+   - UI rendering and Phaser scene management
+   - Delegates game logic to `js/services/gameLogic.js`
+   - Includes screen reader announcements via `aria-live` region
 
 2. **`src/components/Game/GameScene.ts`** (762 lines)
    - Inactive React/TypeScript game implementation
@@ -290,9 +317,24 @@ Game ends if:
    - Used by Gallery component
 
 5. **`index.html`**
-   - Main entry point
+   - Main entry point with `<script type="module">` loading
+   - Semantic landmarks (`<header>`, `<main>`) with skip navigation
+   - ARIA labels on all sections, `aria-live` game status region
+   - Modal dialog with `role="dialog"`, `aria-modal`, focus management
    - ⚠️ Contains hardcoded Google Analytics ID (security issue)
    - Loads external CDN scripts (Phaser, Mapbox)
+
+6. **`js/utils/errorHandler.js`**
+   - Centralized error handling utilities
+   - `logError()` — structured error logging
+   - `renderFallback()` — fallback UI for failed components
+   - `isCDNAvailable()` — checks CDN-loaded global availability
+
+7. **`js/services/gameLogic.js`**
+   - Pure game logic functions extracted from Game.js
+   - `applyDecision()`, `checkGameOver()`, `checkVictory()`
+   - `formatBudget()`, `clampMetric()`
+   - Fully unit tested (25 tests)
 
 ---
 
@@ -300,11 +342,10 @@ Game ends if:
 
 ### Critical (Production Blockers)
 
-1. **Zero Test Coverage**
-   - No testing framework installed
-   - No tests written for any component
-   - High risk of regressions
-   - **Action**: Add Jest + React Testing Library + Vitest
+1. ~~**Zero Test Coverage**~~ — **RESOLVED**
+   - ✅ Vitest installed and configured
+   - ✅ 48 tests across 3 test files (gameLogic, analytics, errorHandler)
+   - **Remaining**: Expand coverage to component initialization and UI interactions
 
 2. **Hardcoded API Keys**
    - Mapbox token in `js/components/Map.js` line 28
@@ -323,34 +364,43 @@ Game ends if:
 4. **Monolithic Components**
    - `GameScene.ts` (762 lines) violates Single Responsibility Principle
    - Mixes UI rendering, game logic, state management, analytics
-   - **Action**: Extract into GameLogic, GameUI, GameState modules
+   - **Note**: Vanilla JS `Game.js` now delegates logic to `gameLogic.js`
+   - **Action**: Apply same extraction to React `GameScene.ts` if that architecture is chosen
 
-5. **Accessibility Gaps**
-   - Only 6 ARIA attributes in entire codebase
-   - No skip navigation links
-   - No visible focus indicators
-   - Phaser game canvas not accessible to screen readers
-   - **Action**: Add ARIA labels, keyboard navigation, focus management
+5. ~~**Accessibility Gaps**~~ — **RESOLVED**
+   - ✅ Skip navigation link added
+   - ✅ Semantic landmarks (`<header>`, `<main>`) with `aria-label` on all sections
+   - ✅ Visible focus indicators (`:focus-visible` styles)
+   - ✅ Game canvas `role="application"` with `aria-live` announcements
+   - ✅ Modal dialog: `role="dialog"`, `aria-modal`, focus trap, Escape to close, focus restoration
+   - ✅ Species cards: `tabindex`, `role="button"`, keyboard Enter/Space support
+   - ✅ Filter/layer buttons: `aria-pressed` state management
+   - ✅ `.sr-only` utility class for screen reader content
+   - ✅ `prefers-reduced-motion` media query
+   - **Remaining**: WCAG AA color contrast audit, additional alt text for images
 
-6. **Incomplete Linting**
-   - ESLint only covers TypeScript, not vanilla JavaScript
-   - No accessibility linting (eslint-plugin-jsx-a11y)
-   - No import ordering rules
-   - **Action**: Extend ESLint to all .js files
+6. ~~**Incomplete Linting**~~ — **PARTIALLY RESOLVED**
+   - ✅ ESLint now covers vanilla JavaScript files (`.js`) with `sourceType: 'module'`
+   - ❌ No accessibility linting (eslint-plugin-jsx-a11y)
+   - ❌ No import ordering rules
+   - **Action**: Add accessibility and import ordering ESLint plugins
 
 ### Medium Priority
 
-7. **No Error Handling**
-   - No try-catch blocks around external API calls (Mapbox, Analytics)
-   - No error boundaries in React components (if that architecture is chosen)
-   - No fallback UI for failures
-   - **Action**: Add error boundaries and try-catch
+7. ~~**No Error Handling**~~ — **RESOLVED**
+   - ✅ Centralized error handler (`js/utils/errorHandler.js`)
+   - ✅ try-catch around all external API calls (Phaser init, Mapbox init, Analytics)
+   - ✅ try-catch in component methods (`makeDecision`, `toggleLayer`, `showSpeciesDetails`)
+   - ✅ Fallback UI rendered on component failure (`renderFallback()`)
+   - ✅ CDN availability checks before component initialization
+   - ✅ Global `error` and `unhandledrejection` handlers in `main.js`
+   - ✅ Mapbox `on('error')` event handler
+   - ✅ 16 unit tests for error handler
 
-8. **Missing Documentation**
-   - Minimal inline code comments
-   - No JSDoc for public methods
-   - No API documentation for components
-   - **Action**: Add JSDoc comments, generate API docs
+8. ~~**Missing Documentation**~~ — **RESOLVED**
+   - ✅ JSDoc with `@module`, `@class`, `@typedef`, `@param`, `@returns` on all 15 JS files
+   - ✅ Type definitions for all data structures (Species, TimelineEvent, Decision, GameStats, etc.)
+   - **Remaining**: Generate HTML API docs from JSDoc
 
 9. **No Deployment Guide**
    - README missing deployment instructions
@@ -429,35 +479,38 @@ All educational content is grounded in real-world data:
 
 ---
 
-## Accessibility Requirements
+## Accessibility
 
-### Current State
-- Semantic HTML structure in `index.html`
-- Only 6 ARIA attributes across entire codebase
-- No keyboard navigation enhancements
-- No screen reader support for game
+### Implemented Features
+- ✅ Skip navigation link (`<a class="skip-link" href="#main-content">`)
+- ✅ Semantic landmarks: `<header>`, `<main id="main-content">`
+- ✅ `aria-label` on all sections, game canvas, modal, buttons
+- ✅ `aria-live="polite"` region for game state announcements (`#game-status`)
+- ✅ `role="application"` on game canvas, `role="dialog"` on modal
+- ✅ `aria-pressed` on filter buttons (Gallery) and layer toggles (Map)
+- ✅ `aria-modal="true"` and `aria-hidden` management on species modal
+- ✅ Visible focus indicators via `:focus-visible` CSS
+- ✅ Keyboard support: Enter/Space on species cards, Escape to close modal
+- ✅ Focus trap in modal (Tab/Shift+Tab cycling between focusable elements)
+- ✅ Focus restoration when modal closes (returns to triggering element)
+- ✅ `.sr-only` utility class for screen reader-only content
+- ✅ `prefers-reduced-motion: reduce` media query (disables animations)
+- ✅ Screen reader game announcements (decisions, metrics, game over)
 
-### Required Improvements
+### Remaining Improvements
 
-1. **ARIA Attributes**
-   - Add `aria-label` to all interactive elements
-   - Add `aria-live` regions for dynamic game updates
-   - Add `role` attributes for custom components
-
-2. **Keyboard Navigation**
-   - Implement visible focus indicators (`:focus-visible`)
-   - Add keyboard shortcuts for game controls
-   - Add skip navigation link to main content
-
-3. **Screen Readers**
-   - Add alternative text for meaningful images
-   - Provide text alternatives for game visuals
-   - Add sr-only utility classes for screen reader content
-
-4. **Color Contrast**
+1. **Color Contrast**
    - Verify WCAG AA compliance for all text
    - Primary color: #B7080D (dark red)
    - Ensure sufficient contrast ratios
+
+2. **Images**
+   - Add alternative text for all meaningful images
+   - Mark decorative images with `alt=""`
+
+3. **Additional Keyboard Navigation**
+   - Add keyboard shortcuts for game decision buttons
+   - Add arrow key navigation for timeline
 
 ---
 
@@ -475,7 +528,7 @@ All educational content is grounded in real-world data:
 1. **Data-driven approach** - Add data to data modules, not components
 2. **Maintain balance** - Keep the three-pillar system balanced
 3. **Real-world grounding** - Use factual data from credible sources
-4. **Test thoroughly** - Manual testing required (no automated tests yet)
+4. **Test thoroughly** - Run `npm test` and add tests for new logic
 
 ### When Refactoring
 
@@ -507,7 +560,8 @@ All educational content is grounded in real-world data:
 ### Pull Request Checklist
 
 - [ ] Code follows project style
-- [ ] Manual testing completed (no automated tests yet)
+- [ ] `npm test` passes (48+ tests)
+- [ ] Manual testing completed for UI interactions
 - [ ] Game mechanics still balanced
 - [ ] Documentation updated (README, CLAUDE.md)
 - [ ] No new hardcoded secrets
@@ -564,25 +618,35 @@ npm run lint
 - Verify Phaser 3 loaded from CDN
 - Check browser console for initialization errors
 - Verify game container exists in DOM
-- Check if `window.gameInstance` is created
+- Check `main.js` CDN availability check (`isCDNAvailable('Phaser')`)
+- Look for fallback error UI in the game section
+
+### Tests Failing
+
+```bash
+npm test  # Run all tests
+# Tests use jsdom environment (configured via @vitest-environment directive)
+# Test files located in __tests__/ directories alongside source
+```
 
 ---
 
 ## Future Roadmap
 
 ### Short-term (Next Sprint)
-1. Add testing infrastructure (Jest, React Testing Library)
+1. ~~Add testing infrastructure~~ — **DONE** (Vitest, 48 tests)
 2. Move API keys to environment variables
-3. Refactor GameScene.ts into smaller modules
-4. Extend ESLint to vanilla JavaScript files
-5. Add basic accessibility improvements
+3. Refactor React `GameScene.ts` into smaller modules (vanilla JS already done)
+4. ~~Extend ESLint to vanilla JavaScript files~~ — **DONE**
+5. ~~Add basic accessibility improvements~~ — **DONE** (comprehensive)
+6. Expand test coverage to component initialization and UI interactions
+7. Add WCAG AA color contrast audit
 
 ### Medium-term (Next Quarter)
-6. Choose single architecture (vanilla JS or React)
-7. Implement comprehensive accessibility
-8. Add performance monitoring (Web Vitals)
-9. Create deployment pipeline
-10. Add API documentation
+8. Choose single architecture (vanilla JS or React)
+9. Add performance monitoring (Web Vitals)
+10. Create deployment pipeline
+11. Generate HTML API docs from JSDoc comments
 
 ### Long-term (Future)
 11. Add user accounts and save progress
@@ -608,31 +672,52 @@ npm run lint
 npm run dev          # Start dev server (localhost:5173)
 npm run build        # Build for production (dist/)
 npm run preview      # Preview production build
-npm run lint         # Lint TypeScript files
+npm run lint         # Lint TypeScript and JavaScript files
+npm test             # Run Vitest (48 tests across 3 files)
 
 # File Locations
-index.html           # Main entry point
+index.html           # Main entry point (ES6 module loading)
 js/components/       # Active vanilla JS components
-src/components/      # Inactive React components
-styles/              # CSS modules
+js/services/         # Game logic (pure functions, unit tested)
+js/utils/            # Analytics, error handler (unit tested)
+js/constants/        # Game decision constants
 js/data/             # Species, timeline, map data
+src/components/      # Inactive React components
+styles/              # CSS modules (incl. accessibility styles)
 
 # Critical Files
-js/components/Game.js              # Active game (423 lines)
+js/components/Game.js              # Active game UI + Phaser scene
+js/services/gameLogic.js           # Game logic (25 tests)
+js/utils/errorHandler.js           # Error handling utilities (16 tests)
 src/components/Game/GameScene.ts   # Inactive game (762 lines - monolithic)
 README.md                          # Documentation (324 lines)
 package.json                       # Dependencies and scripts
 
-# Known Issues
-- No tests
+# Remaining Issues
 - Hardcoded API keys (Map.js, index.html)
 - Dual architecture (vanilla + React)
-- Monolithic components (GameScene.ts)
-- Accessibility gaps (only 6 ARIA attributes)
+- Monolithic React GameScene.ts (vanilla JS version refactored)
+- WCAG AA color contrast audit needed
 ```
 
 ---
 
 **Last Updated**: 2026-02-17
 **Maintained By**: Project contributors
-**Version**: 1.0.0
+**Version**: 1.1.0
+
+### Changelog
+
+**v1.1.0** (2026-02-17) — ES6 Modules, Error Handling, Accessibility, JSDoc
+- Converted all vanilla JS from `window.X` globals to ES6 `import`/`export` modules
+- Added `<script type="module">` loading in `index.html`
+- Created `js/utils/errorHandler.js` with `logError`, `renderFallback`, `isCDNAvailable`
+- Added try-catch around all external API calls (Phaser, Mapbox, Google Analytics)
+- Added global `error`/`unhandledrejection` handlers and CDN availability checks
+- Added fallback UI for failed component initialization
+- Implemented comprehensive accessibility: skip nav, landmarks, ARIA labels, `aria-live`, focus management, keyboard navigation, modal focus trap, `prefers-reduced-motion`
+- Added JSDoc documentation (`@module`, `@class`, `@typedef`, `@param`, `@returns`) to all 15 JS files
+- Extracted game logic to `js/services/gameLogic.js` (pure functions)
+- Added `js/config.js` and `js/constants/gameConstants.js`
+- Set up Vitest with 48 tests (gameLogic, analytics, errorHandler)
+- Extended ESLint to cover JavaScript files with `sourceType: 'module'`
