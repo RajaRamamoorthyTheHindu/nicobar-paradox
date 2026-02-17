@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   if (document.getElementById('map')) {
-    new window.Map();
+    new window.MapComponent();
   }
 
   if (document.getElementById('endangered-species')) {

@@ -1,4 +1,4 @@
-class Map {
+class MapComponent {
   constructor() {
     this.mapbox = null;
     this.activeLayers = ['pristine'];
@@ -25,7 +25,7 @@ class Map {
       return;
     }
 
-    mapboxgl.accessToken = 'pk.eyJ1IjoicmFqYXJhbWFtb29ydGh5IiwiYSI6ImNtNzMxZm16NDBmbWoyb3B2NTVtMGNqaGYifQ.2sGBMZyL7BnNf8SxRxYS8w';
+    mapboxgl.accessToken = (window.__CONFIG__ && window.__CONFIG__.MAPBOX_TOKEN) || '';
     
     this.mapbox = new mapboxgl.Map({
       container: 'map',
@@ -92,14 +92,40 @@ class Map {
   createLayerButton(layer) {
     const button = document.createElement('button');
     button.className = `layer-button ${this.activeLayers.includes(layer.id) ? 'active' : ''}`;
-    button.innerHTML = `
-      <div class="layer-info">
-        <div class="layer-name">${layer.name}</div>
-        <div class="layer-description">${layer.description}</div>
-      </div>
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="layer-icon"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
-    `;
-    
+    button.setAttribute('data-layer', layer.id);
+
+    const info = document.createElement('div');
+    info.className = 'layer-info';
+    const name = document.createElement('div');
+    name.className = 'layer-name';
+    name.textContent = layer.name;
+    const desc = document.createElement('div');
+    desc.className = 'layer-description';
+    desc.textContent = layer.description;
+    info.appendChild(name);
+    info.appendChild(desc);
+    button.appendChild(info);
+
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('width', '24');
+    svg.setAttribute('height', '24');
+    svg.setAttribute('viewBox', '0 0 24 24');
+    svg.setAttribute('fill', 'none');
+    svg.setAttribute('stroke', 'currentColor');
+    svg.setAttribute('stroke-width', '2');
+    svg.setAttribute('stroke-linecap', 'round');
+    svg.setAttribute('stroke-linejoin', 'round');
+    svg.classList.add('layer-icon');
+    const eyePath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    eyePath.setAttribute('d', 'M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z');
+    const eyeCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    eyeCircle.setAttribute('cx', '12');
+    eyeCircle.setAttribute('cy', '12');
+    eyeCircle.setAttribute('r', '3');
+    svg.appendChild(eyePath);
+    svg.appendChild(eyeCircle);
+    button.appendChild(svg);
+
     button.addEventListener('click', () => this.toggleLayer(layer.id));
     return button;
   }
@@ -138,5 +164,5 @@ class Map {
   }
 }
 
-// Make Map class globally available
-window.Map = Map;
+// Make MapComponent class globally available
+window.MapComponent = MapComponent;
