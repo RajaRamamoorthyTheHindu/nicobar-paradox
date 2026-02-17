@@ -1,5 +1,19 @@
-// Make data globally available
-window.mapData = {
+/**
+ * Geographic data and layer definitions for the interactive map.
+ * @module mapData
+ */
+
+/**
+ * @typedef {Object} MapLayer
+ * @property {string} id - Unique layer identifier.
+ * @property {string} name - Display name.
+ * @property {string} description - Layer description.
+ * @property {string} color - Hex color for map rendering.
+ */
+
+// Geographic data for the Mapbox interactive map
+/** @type {Object<string, Object>} GeoJSON data keyed by layer ID. */
+export const mapData = {
   pristine: {
     type: 'FeatureCollection',
     features: [
@@ -25,7 +39,8 @@ window.mapData = {
   }
 };
 
-window.mapLayers = [
+/** @type {MapLayer[]} */
+export const mapLayers = [
   {
     id: 'pristine',
     name: 'Pristine Ecosystem (Pre-2020)',

@@ -1,53 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-
-// Import the game logic by simulating the window global pattern
-const GAME_CONSTANTS = {
-  INITIAL_STATS: { social: 100, economic: 100, ecology: 100, budget: 81800 },
-  MAX_TURNS: 10,
-  DEFEAT_THRESHOLD: 30,
-  VICTORY_THRESHOLD: 50
-};
-
-// Replicate the pure logic functions for testing
-const gameLogic = {
-  applyDecision(stats, decision) {
-    const newStats = { ...stats };
-    newStats.budget -= decision.cost;
-    Object.entries(decision.effects).forEach(([stat, value]) => {
-      newStats[stat] = Math.max(0, Math.min(100, newStats[stat] + value));
-    });
-    return newStats;
-  },
-
-  checkGameOver(stats, turn, maxTurns) {
-    const threshold = GAME_CONSTANTS.DEFEAT_THRESHOLD;
-    if (stats.social <= threshold) return { isOver: true, reason: 'social' };
-    if (stats.ecology <= threshold) return { isOver: true, reason: 'ecology' };
-    if (stats.economic <= threshold) return { isOver: true, reason: 'economic' };
-    if (stats.budget <= 0) return { isOver: true, reason: 'budget' };
-    if (turn > maxTurns) return { isOver: true, reason: 'turns' };
-    return { isOver: false, reason: null };
-  },
-
-  getEndMessage(reason) {
-    const messages = {
-      social: 'Social fabric torn apart. Communities scattered, traditions lost forever.',
-      ecology: 'Ecological collapse. Ancient forests give way to concrete and steel.',
-      economic: 'Economic promises unfulfilled. Development at any cost proves costly.',
-      budget: 'Budget depleted. The price of progress exceeds all estimates.',
-      turns: 'Time runs out. Progress marches on, leaving destruction in its wake.'
-    };
-    return messages[reason] || 'A precarious balance achieved, but at what cost to the island\'s soul?';
-  },
-
-  canAfford(budget, cost) {
-    return budget >= cost;
-  },
-
-  clampStat(value) {
-    return Math.max(0, Math.min(100, value));
-  }
-};
+import { gameLogic } from '../gameLogic.js';
+import { GAME_CONSTANTS } from '../../constants/gameConstants.js';
 
 describe('gameLogic', () => {
   let stats;

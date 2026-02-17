@@ -1,5 +1,26 @@
-// Make data globally available
-window.timelineData = [
+/**
+ * Historical timeline events for the timeline section.
+ * @module timelineData
+ */
+
+/**
+ * @typedef {Object} TimelineQuote
+ * @property {string} text - Quote text.
+ * @property {string} source - Attribution source.
+ */
+
+/**
+ * @typedef {Object} TimelineEvent
+ * @property {string} year - Year or date string.
+ * @property {string} title - Event title.
+ * @property {string} description - Event description.
+ * @property {string} category - Event category.
+ * @property {TimelineQuote} [quote] - Optional associated quote.
+ */
+
+// Historical timeline events for Great Nicobar Island
+/** @type {TimelineEvent[]} */
+export const timelineData = [
   {
     year: 1950,
     title: "Pre-Colonial Era: Indigenous Harmony",

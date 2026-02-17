@@ -1,5 +1,35 @@
+/**
+ * Game configuration constants and decision definitions.
+ * @module gameConstants
+ */
+
+/**
+ * @typedef {Object} DecisionEffects
+ * @property {number} social - Change to social metric (-100 to 100).
+ * @property {number} economic - Change to economic metric (-100 to 100).
+ * @property {number} ecology - Change to ecology metric (-100 to 100).
+ */
+
+/**
+ * @typedef {Object} Decision
+ * @property {string} text - Display name of the decision.
+ * @property {number} cost - Budget cost in crores.
+ * @property {DecisionEffects} effects - Metric impacts.
+ * @property {string} description - Tooltip description.
+ * @property {string} message - Notification message after selection.
+ */
+
+/**
+ * @typedef {Object} GameStats
+ * @property {number} social - Social impact score (0-100).
+ * @property {number} economic - Economic growth score (0-100).
+ * @property {number} ecology - Environmental health score (0-100).
+ * @property {number} budget - Remaining budget in crores.
+ */
+
 // Game configuration constants
-window.GAME_CONSTANTS = {
+/** @type {Object} Game configuration including initial stats, decisions, and thresholds. */
+export const GAME_CONSTANTS = {
   INITIAL_STATS: {
     social: 100,
     economic: 100,

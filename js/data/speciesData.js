@@ -1,5 +1,23 @@
-// Make data globally available
-window.speciesData = [
+/**
+ * Endangered species data for the gallery section.
+ * @module speciesData
+ */
+
+/**
+ * @typedef {Object} Species
+ * @property {string} name - Common name of the species.
+ * @property {string} scientificName - Scientific (Latin) name.
+ * @property {string} status - IUCN conservation status.
+ * @property {string} category - Habitat category (marine, terrestrial, avian).
+ * @property {string} image - URL or path to species image.
+ * @property {string} shortDescription - Brief description for card display.
+ * @property {string} description - Full description for modal display.
+ * @property {string[]} threats - List of conservation threats.
+ */
+
+// Species data for the endangered species gallery
+/** @type {Species[]} */
+export const speciesData = [
   {
     id: 1,
     name: 'Nicobar Megapode',

@@ -1,10 +1,22 @@
-class MapComponent {
+/**
+ * Interactive Mapbox GL map component.
+ * Displays satellite imagery of Great Nicobar with toggleable data layers.
+ * @module MapComponent
+ */
+
+import { CONFIG } from '../config.js';
+import { mapData, mapLayers } from '../data/mapData.js';
+import { logError, renderFallback } from '../utils/errorHandler.js';
+
+/** @class MapComponent - Mapbox GL JS integration with layer controls and satellite imagery. */
+export class MapComponent {
   constructor() {
     this.mapbox = null;
     this.activeLayers = ['pristine'];
     this.init();
   }
 
+  /** Initialize the map, create layer controls, and set up section observation. */
   init() {
     // Wait for Mapbox GL JS to load
     if (typeof mapboxgl === 'undefined') {
@@ -19,29 +31,37 @@ class MapComponent {
     this.observeSection();
   }
 
+  /** Create the Mapbox GL map instance and configure error handling. */
   initMap() {
     if (!mapboxgl) {
       console.error('Mapbox GL JS not loaded');
       return;
     }
 
-    mapboxgl.accessToken = (window.__CONFIG__ && window.__CONFIG__.MAPBOX_TOKEN) || '';
-    
-    this.mapbox = new mapboxgl.Map({
-      container: 'map',
-      style: 'mapbox://styles/mapbox/satellite-v9',
-      center: [93.8, 6.8],
-      zoom: 12,
-      pitch: 45
-    });
+    try {
+      mapboxgl.accessToken = CONFIG.MAPBOX_TOKEN || '';
 
-    this.mapbox.on('load', () => this.addLayers());
+      this.mapbox = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/satellite-v9',
+        center: [93.8, 6.8],
+        zoom: 12,
+        pitch: 45
+      });
+
+      this.mapbox.on('load', () => this.addLayers());
+      this.mapbox.on('error', (e) => logError('Map.mapboxError', e.error || e));
+    } catch (error) {
+      logError('Map.initMap', error);
+      renderFallback(document.getElementById('map'), 'Interactive Map', 'Failed to initialize the map. The Mapbox service may be unavailable.');
+    }
   }
 
+  /** Add all GeoJSON data sources and their visual layers to the map. */
   addLayers() {
     if (!this.mapbox) return;
 
-    Object.entries(window.mapData).forEach(([id, data]) => {
+    Object.entries(mapData).forEach(([id, data]) => {
       this.mapbox.addSource(id, {
         type: 'geojson',
         data
@@ -52,10 +72,14 @@ class MapComponent {
     });
   }
 
+  /**
+   * Add fill and line layers for a GeoJSON source.
+   * @param {string} id - The source/layer identifier.
+   */
   addLayerStyles(id) {
     if (!this.mapbox) return;
 
-    const layer = window.mapLayers.find(l => l.id === id);
+    const layer = mapLayers.find(l => l.id === id);
     if (!layer) return;
 
     this.mapbox.addLayer({
@@ -79,20 +103,28 @@ class MapComponent {
     });
   }
 
+  /** Create the layer toggle control panel. */
   createControls() {
     const container = document.getElementById('layer-controls');
     if (!container) return;
-    
-    window.mapLayers.forEach(layer => {
+
+    mapLayers.forEach(layer => {
       const button = this.createLayerButton(layer);
       container.appendChild(button);
     });
   }
 
+  /**
+   * Create a toggle button for a map layer.
+   * @param {import('../data/mapData.js').MapLayer} layer - Layer configuration.
+   * @returns {HTMLButtonElement} The layer toggle button element.
+   */
   createLayerButton(layer) {
     const button = document.createElement('button');
     button.className = `layer-button ${this.activeLayers.includes(layer.id) ? 'active' : ''}`;
     button.setAttribute('data-layer', layer.id);
+    button.setAttribute('aria-pressed', this.activeLayers.includes(layer.id) ? 'true' : 'false');
+    button.setAttribute('aria-label', layer.name + ': ' + layer.description);
 
     const info = document.createElement('div');
     info.className = 'layer-info';
@@ -130,21 +162,31 @@ class MapComponent {
     return button;
   }
 
+  /**
+   * Toggle visibility of a map layer and update the button state.
+   * @param {string} layerId - The layer identifier to toggle.
+   */
   toggleLayer(layerId) {
     if (!this.mapbox) return;
 
-    const visibility = this.mapbox.getLayoutProperty(`${layerId}-fill`, 'visibility');
-    const newVisibility = visibility === 'visible' ? 'none' : 'visible';
+    try {
+      const visibility = this.mapbox.getLayoutProperty(`${layerId}-fill`, 'visibility');
+      const newVisibility = visibility === 'visible' ? 'none' : 'visible';
 
-    this.mapbox.setLayoutProperty(`${layerId}-fill`, 'visibility', newVisibility);
-    this.mapbox.setLayoutProperty(`${layerId}-line`, 'visibility', newVisibility);
+      this.mapbox.setLayoutProperty(`${layerId}-fill`, 'visibility', newVisibility);
+      this.mapbox.setLayoutProperty(`${layerId}-line`, 'visibility', newVisibility);
 
-    const button = document.querySelector(`[data-layer="${layerId}"]`);
-    if (button) {
-      button.classList.toggle('active');
+      const button = document.querySelector(`[data-layer="${layerId}"]`);
+      if (button) {
+        button.classList.toggle('active');
+        button.setAttribute('aria-pressed', button.classList.contains('active'));
+      }
+    } catch (error) {
+      logError('Map.toggleLayer', error);
     }
   }
 
+  /** Set up IntersectionObserver to trigger fade-in on the map section. */
   observeSection() {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -163,6 +205,3 @@ class MapComponent {
     }
   }
 }
-
-// Make MapComponent class globally available
-window.MapComponent = MapComponent;
