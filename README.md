@@ -83,6 +83,63 @@ npm run build
 
 The built files will be in the `dist` directory.
 
+### Deploying to Vercel
+
+This project is configured for easy deployment to Vercel.
+
+#### Quick Deploy
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone)
+
+#### Manual Deployment
+
+1. **Install Vercel CLI** (optional):
+```bash
+npm install -g vercel
+```
+
+2. **Set up environment variables**:
+   - Copy `.env.example` to `.env`
+   - Get a Mapbox token at https://account.mapbox.com/access-tokens/
+   - Get a Google Analytics ID at https://analytics.google.com/
+   - Update the values in `.env`:
+   ```env
+   VITE_MAPBOX_TOKEN=your_actual_mapbox_token
+   VITE_GA_ID=your_actual_ga_measurement_id
+   ```
+
+3. **Deploy via Vercel Dashboard**:
+   - Go to https://vercel.com/new
+   - Import your Git repository
+   - Add environment variables in the Vercel dashboard:
+     - `VITE_MAPBOX_TOKEN`: Your Mapbox public token
+     - `VITE_GA_ID`: Your Google Analytics measurement ID
+   - Click "Deploy"
+
+4. **Deploy via CLI** (if you installed Vercel CLI):
+```bash
+vercel
+```
+
+#### Environment Variables Configuration
+
+After deployment, configure these environment variables in your Vercel project settings:
+
+| Variable | Description | Required |
+|----------|-------------|----------|
+| `VITE_MAPBOX_TOKEN` | Mapbox GL JS public access token | Yes |
+| `VITE_GA_ID` | Google Analytics measurement ID | Optional |
+
+**Important**: Never commit your `.env` file to version control. Always use `.env.example` as a template.
+
+#### Vercel Configuration
+
+The project includes a `vercel.json` configuration file that:
+- Sets the build command to `npm run build`
+- Configures the output directory as `dist`
+- Enables SPA routing (all routes point to `index.html`)
+- Sets caching headers for static assets
+
 ## 🎮 How to Use
 
 ### Interactive Game
