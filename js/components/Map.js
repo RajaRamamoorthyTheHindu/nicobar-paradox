@@ -1,4 +1,8 @@
-class MapComponent {
+import { CONFIG } from '../config.js';
+import { mapData, mapLayers } from '../data/mapData.js';
+import { logError, renderFallback } from '../utils/errorHandler.js';
+
+export class MapComponent {
   constructor() {
     this.mapbox = null;
     this.activeLayers = ['pristine'];
@@ -25,23 +29,29 @@ class MapComponent {
       return;
     }
 
-    mapboxgl.accessToken = (window.__CONFIG__ && window.__CONFIG__.MAPBOX_TOKEN) || '';
-    
-    this.mapbox = new mapboxgl.Map({
-      container: 'map',
-      style: 'mapbox://styles/mapbox/satellite-v9',
-      center: [93.8, 6.8],
-      zoom: 12,
-      pitch: 45
-    });
+    try {
+      mapboxgl.accessToken = CONFIG.MAPBOX_TOKEN || '';
 
-    this.mapbox.on('load', () => this.addLayers());
+      this.mapbox = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/satellite-v9',
+        center: [93.8, 6.8],
+        zoom: 12,
+        pitch: 45
+      });
+
+      this.mapbox.on('load', () => this.addLayers());
+      this.mapbox.on('error', (e) => logError('Map.mapboxError', e.error || e));
+    } catch (error) {
+      logError('Map.initMap', error);
+      renderFallback(document.getElementById('map'), 'Interactive Map', 'Failed to initialize the map. The Mapbox service may be unavailable.');
+    }
   }
 
   addLayers() {
     if (!this.mapbox) return;
 
-    Object.entries(window.mapData).forEach(([id, data]) => {
+    Object.entries(mapData).forEach(([id, data]) => {
       this.mapbox.addSource(id, {
         type: 'geojson',
         data
@@ -55,7 +65,7 @@ class MapComponent {
   addLayerStyles(id) {
     if (!this.mapbox) return;
 
-    const layer = window.mapLayers.find(l => l.id === id);
+    const layer = mapLayers.find(l => l.id === id);
     if (!layer) return;
 
     this.mapbox.addLayer({
@@ -82,8 +92,8 @@ class MapComponent {
   createControls() {
     const container = document.getElementById('layer-controls');
     if (!container) return;
-    
-    window.mapLayers.forEach(layer => {
+
+    mapLayers.forEach(layer => {
       const button = this.createLayerButton(layer);
       container.appendChild(button);
     });
@@ -93,6 +103,8 @@ class MapComponent {
     const button = document.createElement('button');
     button.className = `layer-button ${this.activeLayers.includes(layer.id) ? 'active' : ''}`;
     button.setAttribute('data-layer', layer.id);
+    button.setAttribute('aria-pressed', this.activeLayers.includes(layer.id) ? 'true' : 'false');
+    button.setAttribute('aria-label', layer.name + ': ' + layer.description);
 
     const info = document.createElement('div');
     info.className = 'layer-info';
@@ -133,15 +145,20 @@ class MapComponent {
   toggleLayer(layerId) {
     if (!this.mapbox) return;
 
-    const visibility = this.mapbox.getLayoutProperty(`${layerId}-fill`, 'visibility');
-    const newVisibility = visibility === 'visible' ? 'none' : 'visible';
+    try {
+      const visibility = this.mapbox.getLayoutProperty(`${layerId}-fill`, 'visibility');
+      const newVisibility = visibility === 'visible' ? 'none' : 'visible';
 
-    this.mapbox.setLayoutProperty(`${layerId}-fill`, 'visibility', newVisibility);
-    this.mapbox.setLayoutProperty(`${layerId}-line`, 'visibility', newVisibility);
+      this.mapbox.setLayoutProperty(`${layerId}-fill`, 'visibility', newVisibility);
+      this.mapbox.setLayoutProperty(`${layerId}-line`, 'visibility', newVisibility);
 
-    const button = document.querySelector(`[data-layer="${layerId}"]`);
-    if (button) {
-      button.classList.toggle('active');
+      const button = document.querySelector(`[data-layer="${layerId}"]`);
+      if (button) {
+        button.classList.toggle('active');
+        button.setAttribute('aria-pressed', button.classList.contains('active'));
+      }
+    } catch (error) {
+      logError('Map.toggleLayer', error);
     }
   }
 
@@ -163,6 +180,3 @@ class MapComponent {
     }
   }
 }
-
-// Make MapComponent class globally available
-window.MapComponent = MapComponent;

@@ -1,8 +1,17 @@
-class Hero {
+/**
+ * Hero landing section component.
+ * Handles the introductory section with scroll-to-content functionality
+ * and intersection observer for fade-in animations.
+ * @module Hero
+ */
+
+/** @class Hero - Landing section with scroll-to-content button and fade-in animation. */
+export class Hero {
   constructor() {
     this.init();
   }
 
+  /** Initialize the start button click handler and section observer. */
   init() {
     const startButton = document.getElementById('start-experience');
     startButton.addEventListener('click', () => {
@@ -12,6 +21,7 @@ class Hero {
     this.observeSection();
   }
 
+  /** Set up IntersectionObserver to trigger fade-in animation on the hero content. */
   observeSection() {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -27,6 +37,3 @@ class Hero {
     observer.observe(document.querySelector('.hero-content'));
   }
 }
-
-// Make Hero class globally available
-window.Hero = Hero;

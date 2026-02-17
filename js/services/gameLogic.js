@@ -1,8 +1,18 @@
+/**
+ * Pure game logic functions for the decision simulation.
+ * Handles stat calculations, game-over detection, and end-game messaging.
+ * @module gameLogic
+ */
+import { GAME_CONSTANTS } from '../constants/gameConstants.js';
+
 // Pure game logic functions — no Phaser dependency, easily testable
-window.gameLogic = {
+export const gameLogic = {
   /**
-   * Apply a decision's effects to current stats.
-   * Returns a new stats object with clamped values.
+   * Apply a decision's effects to the current game stats.
+   * Returns a new stats object without mutating the original.
+   * @param {import('../constants/gameConstants.js').GameStats} stats - Current game stats.
+   * @param {import('../constants/gameConstants.js').Decision} decision - The decision to apply.
+   * @returns {import('../constants/gameConstants.js').GameStats} Updated stats with effects applied and values clamped.
    */
   applyDecision(stats, decision) {
     const newStats = { ...stats };
@@ -14,11 +24,14 @@ window.gameLogic = {
   },
 
   /**
-   * Check if the game is over.
-   * Returns { isOver: boolean, reason: string|null }
+   * Check whether the game should end based on current conditions.
+   * @param {import('../constants/gameConstants.js').GameStats} stats - Current game stats.
+   * @param {number} turn - Current turn number.
+   * @param {number} maxTurns - Maximum number of turns allowed.
+   * @returns {{isOver: boolean, reason: string|null}} Game-over status and reason.
    */
   checkGameOver(stats, turn, maxTurns) {
-    const threshold = window.GAME_CONSTANTS.DEFEAT_THRESHOLD;
+    const threshold = GAME_CONSTANTS.DEFEAT_THRESHOLD;
 
     if (stats.social <= threshold) {
       return { isOver: true, reason: 'social' };
@@ -39,7 +52,9 @@ window.gameLogic = {
   },
 
   /**
-   * Get the appropriate end message based on what triggered game over.
+   * Get the end-game narrative message for a given game-over reason.
+   * @param {string} reason - The reason the game ended (social, ecology, economic, budget, turns).
+   * @returns {string} A narrative description of the outcome.
    */
   getEndMessage(reason) {
     const messages = {
@@ -53,14 +68,19 @@ window.gameLogic = {
   },
 
   /**
-   * Check if the player can afford a decision.
+   * Check if the current budget can cover a decision's cost.
+   * @param {number} budget - Current budget in crores.
+   * @param {number} cost - Cost of the decision in crores.
+   * @returns {boolean} True if budget >= cost.
    */
   canAfford(budget, cost) {
     return budget >= cost;
   },
 
   /**
-   * Clamp a stat value between 0 and 100.
+   * Clamp a stat value to the valid 0-100 range.
+   * @param {number} value - The value to clamp.
+   * @returns {number} The clamped value.
    */
   clampStat(value) {
     return Math.max(0, Math.min(100, value));

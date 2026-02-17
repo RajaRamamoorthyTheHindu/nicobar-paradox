@@ -1,21 +1,38 @@
-class Timeline {
+/**
+ * Interactive timeline component displaying historical events.
+ * Renders timeline events with intersection observer animations.
+ * @module Timeline
+ */
+
+import { timelineData } from '../data/timelineData.js';
+
+/** @class Timeline - Renders historical events along a vertical timeline with scroll animations. */
+export class Timeline {
   constructor() {
     this.container = document.querySelector('.timeline-container');
     this.init();
   }
 
+  /** Initialize the timeline by rendering events and setting up scroll observation. */
   init() {
     this.renderEvents();
     this.observeEvents();
   }
 
+  /** Render all timeline events into the container. */
   renderEvents() {
-    window.timelineData.forEach((event, index) => {
+    timelineData.forEach((event, index) => {
       const eventElement = this.createEventElement(event, index % 2 === 0);
       this.container.appendChild(eventElement);
     });
   }
 
+  /**
+   * Create a timeline event DOM element.
+   * @param {import('../data/timelineData.js').TimelineEvent} event - The timeline event data.
+   * @param {boolean} isLeft - Whether the event should appear on the left side.
+   * @returns {HTMLElement} The constructed timeline event element.
+   */
   createEventElement(event, isLeft) {
     const element = document.createElement('div');
     element.className = `timeline-event ${isLeft ? 'left' : 'right'}`;
@@ -92,6 +109,7 @@ class Timeline {
     return element;
   }
 
+  /** Set up IntersectionObserver to animate timeline events as they scroll into view. */
   observeEvents() {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -109,6 +127,3 @@ class Timeline {
     });
   }
 }
-
-// Make Timeline class globally available
-window.Timeline = Timeline;

@@ -5,24 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Great Nicobar Paradox</title>
   <link rel="icon" type="image/svg+xml" href="/vite.svg">
-  <!-- Configuration -->
-  <script src="/js/config.js"></script>
-  <!-- Google Analytics -->
-  <script>
-    (function() {
-      var id = window.__CONFIG__ && window.__CONFIG__.GA_ID;
-      if (!id) return;
-      var s = document.createElement('script');
-      s.async = true;
-      s.src = 'https://www.googletagmanager.com/gtag/js?id=' + id;
-      document.head.appendChild(s);
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      window.gtag = gtag;
-      gtag('js', new Date());
-      gtag('config', id);
-    })();
-  </script>
   <!-- Styles -->
   <link rel="stylesheet" href="/styles/main.css">
   <link rel="stylesheet" href="/styles/game.css">
@@ -33,27 +15,34 @@
   <link href='https://api.mapbox.gl/mapbox-gl.css' rel='stylesheet' />
 </head>
 <body>
+  <!-- Skip Navigation -->
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
   <!-- Hero Section -->
-  <section class="hero">
+  <header>
+  <section class="hero" aria-label="Introduction">
     <div class="hero-overlay"></div>
     <div class="hero-content">
       <h1>The Great Nicobar Paradox</h1>
       <p>Explore the story of Great Nicobar, where progress meets irreversible loss</p>
-      <button id="start-experience" class="btn btn-primary">
+      <button id="start-experience" class="btn btn-primary" aria-label="Start experience - scroll to game section">
         Start Experience
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
       </button>
     </div>
   </section>
+  </header>
 
+  <main id="main-content">
   <!-- Game Section -->
-  <section id="game-section" class="section">
+  <section id="game-section" class="section" aria-label="Decision Simulation Game">
     <div class="container">
       <div class="section-header">
         <h2>The Great Nicobar Paradox</h2>
         <p>Take control of the ₹81,800 crore development project. Can you balance progress with preservation?</p>
       </div>
-      <div id="game-canvas"></div>
+      <div id="game-canvas" role="application" aria-label="Game simulation canvas"></div>
+      <div id="game-status" class="sr-only" aria-live="polite" aria-atomic="true"></div>
       <div class="game-instructions">
         <div class="instruction-block">
           <h3>How to Play</h3>
@@ -86,7 +75,7 @@
   </section>
 
   <!-- Timeline Section -->
-  <section id="timeline" class="section bg-gray">
+  <section id="timeline" class="section bg-gray" aria-label="Historical Timeline">
     <div class="container">
       <div class="section-header">
         <h2>A Land in Flux</h2>
@@ -100,7 +89,7 @@
   </section>
 
   <!-- Map Section -->
-  <section id="map-section" class="section">
+  <section id="map-section" class="section" aria-label="Interactive Map Visualization">
     <div class="container">
       <div class="section-header">
         <h2>The Vanishing Nicobar</h2>
@@ -127,7 +116,7 @@
   </section>
 
   <!-- Gallery Section -->
-  <section id="endangered-species" class="section">
+  <section id="endangered-species" class="section" aria-label="Endangered Species Gallery">
     <div class="container">
       <div class="section-header">
         <h2>Vanishing Treasures</h2>
@@ -153,28 +142,19 @@
     </div>
   </section>
 
+  </main>
+
   <!-- Modal -->
-  <div id="species-modal" class="modal">
+  <div id="species-modal" class="modal" role="dialog" aria-modal="true" aria-label="Species Details" aria-hidden="true">
     <!-- Modal content will be inserted here by JavaScript -->
   </div>
 
   <!-- Scripts -->
-  <!-- Load external dependencies first -->
+  <!-- Load external CDN dependencies (globals: Phaser, mapboxgl) -->
   <script src="https://cdn.jsdelivr.net/npm/phaser@3.80.1/dist/phaser.min.js"></script>
   <script src='https://api.mapbox.gl/mapbox-gl-js.min.js'></script>
-  
-  <!-- Then load our application scripts -->
-  <script src="/js/utils/analytics.js"></script>
-  <script src="/js/constants/gameConstants.js"></script>
-  <script src="/js/services/gameLogic.js"></script>
-  <script src="/js/data/speciesData.js"></script>
-  <script src="/js/data/timelineData.js"></script>
-  <script src="/js/data/mapData.js"></script>
-  <script src="/js/components/Hero.js"></script>
-  <script src="/js/components/Game.js"></script>
-  <script src="/js/components/Timeline.js"></script>
-  <script src="/js/components/Map.js"></script>
-  <script src="/js/components/Gallery.js"></script>
-  <script src="/js/main.js"></script>
+
+  <!-- Application entry point (ES6 module) -->
+  <script type="module" src="/js/main.js"></script>
 </body>
 </html>
