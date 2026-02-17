@@ -5,13 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Great Nicobar Paradox</title>
   <link rel="icon" type="image/svg+xml" href="/vite.svg">
+  <!-- Configuration -->
+  <script src="/js/config.js"></script>
   <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-MSXP46EF6N"></script>
   <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-MSXP46EF6N');
+    (function() {
+      var id = window.__CONFIG__ && window.__CONFIG__.GA_ID;
+      if (!id) return;
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=' + id;
+      document.head.appendChild(s);
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', id);
+    })();
   </script>
   <!-- Styles -->
   <link rel="stylesheet" href="/styles/main.css">
@@ -155,6 +165,8 @@
   
   <!-- Then load our application scripts -->
   <script src="/js/utils/analytics.js"></script>
+  <script src="/js/constants/gameConstants.js"></script>
+  <script src="/js/services/gameLogic.js"></script>
   <script src="/js/data/speciesData.js"></script>
   <script src="/js/data/timelineData.js"></script>
   <script src="/js/data/mapData.js"></script>

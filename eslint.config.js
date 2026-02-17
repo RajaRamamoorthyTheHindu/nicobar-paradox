@@ -1,28 +1,32 @@
 import js from '@eslint/js';
-import globals from 'globals';
-import reactHooks from 'eslint-plugin-react-hooks';
-import reactRefresh from 'eslint-plugin-react-refresh';
-import tseslint from 'typescript-eslint';
 
-export default tseslint.config(
-  { ignores: ['dist'] },
+export default [
+  js.configs.recommended,
   {
-    extends: [js.configs.recommended, ...tseslint.configs.recommended],
-    files: ['**/*.{ts,tsx}'],
+    files: ['js/**/*.js'],
     languageOptions: {
       ecmaVersion: 2020,
-      globals: globals.browser,
-    },
-    plugins: {
-      'react-hooks': reactHooks,
-      'react-refresh': reactRefresh,
+      sourceType: 'script',
+      globals: {
+        window: 'readonly',
+        document: 'readonly',
+        console: 'readonly',
+        IntersectionObserver: 'readonly',
+        Phaser: 'readonly',
+        mapboxgl: 'readonly',
+        Math: 'readonly',
+        Date: 'readonly',
+        Object: 'readonly'
+      }
     },
     rules: {
-      ...reactHooks.configs.recommended.rules,
-      'react-refresh/only-export-components': [
-        'warn',
-        { allowConstantExport: true },
-      ],
-    },
+      'no-var': 'error',
+      'prefer-const': 'warn',
+      'eqeqeq': ['error', 'always'],
+      'no-unused-vars': ['warn', { argsIgnorePattern: '^_' }]
+    }
+  },
+  {
+    ignores: ['node_modules/**', 'dist/**']
   }
-);
+];
