@@ -17,7 +17,7 @@
   border: none;
   border-bottom: 2px solid transparent;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: color 0.3s ease, border-color 0.3s ease;
 }
 
 .filter-button:hover {
@@ -40,7 +40,7 @@
   border-radius: 0.25rem;
   overflow: hidden;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   background: white;
 }
 
@@ -102,7 +102,7 @@
   color: white;
   transform: translateY(20px);
   opacity: 0;
-  transition: all 0.3s ease;
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .species-card:hover .species-info {
@@ -148,7 +148,7 @@
   padding: 1.5rem;
   border-radius: 0.25rem;
   border: 1px solid var(--border);
-  transition: all 0.3s ease;
+  transition: border-color 0.3s ease, transform 0.2s ease;
 }
 
 .article-card:hover {

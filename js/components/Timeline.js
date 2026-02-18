@@ -100,8 +100,9 @@ export class Timeline {
       const imageWrapper = document.createElement('div');
       imageWrapper.className = 'timeline-image';
       const img = document.createElement('img');
-      img.src = event.image;
+      img.src = event.image + '?auto=format&fit=crop&w=640&q=80';
       img.alt = event.title;
+      img.loading = 'lazy';
       imageWrapper.appendChild(img);
       element.appendChild(imageWrapper);
     }

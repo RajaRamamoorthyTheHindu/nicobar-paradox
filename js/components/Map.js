@@ -12,7 +12,7 @@ import { logError, renderFallback } from '../utils/errorHandler.js';
 export class MapComponent {
   constructor() {
     this.mapbox = null;
-    this.activeLayers = ['pristine'];
+    this.activeLayers = ['pristine', 'development', 'tribal', 'impact'];
     this.init();
   }
 

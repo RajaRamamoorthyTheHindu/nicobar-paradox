@@ -19,7 +19,7 @@
   margin: 4rem 0;
   opacity: 0;
   transform: translateY(10px);
-  transition: all 1s ease;
+  transition: opacity 1s ease, transform 1s ease;
 }
 
 .timeline-event.visible {

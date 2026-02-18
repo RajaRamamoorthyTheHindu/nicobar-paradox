@@ -33,7 +33,7 @@
 }
 
 .reckoning-cluster {
-  border-top: 2px solid #374151;
+  border-top: 2px solid #262626;
   padding-top: 2rem;
 }
 
@@ -63,8 +63,8 @@
 
 /* Article cards — dark overrides */
 .reckoning-section .article-card {
-  background: #111827;
-  border: 1px solid #374151;
+  background: #141414;
+  border: 1px solid #262626;
   border-radius: 0.25rem;
   padding: 1.25rem;
   color: #e5e7eb;
