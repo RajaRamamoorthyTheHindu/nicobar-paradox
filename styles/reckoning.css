@@ -1,0 +1,144 @@
+/* Reckoning Section Styles — dark final section */
+
+.reckoning-section {
+  background: #0a0a0a;
+  color: #e5e7eb;
+}
+
+.reckoning-section .section-header h2 {
+  color: #ffffff;
+}
+
+.reckoning-section .section-header p {
+  color: #9ca3af;
+}
+
+/* Thesis blockquote */
+.reckoning-thesis {
+  max-width: 48rem;
+  margin: 0 auto 4rem;
+  padding-left: 1.5rem;
+  border-left: 3px solid var(--primary);
+  font-size: 1.125rem;
+  line-height: 1.8;
+  color: #d1d5db;
+}
+
+/* Article clusters grid */
+.reckoning-clusters {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 3rem;
+  margin-bottom: 4rem;
+}
+
+.reckoning-cluster {
+  border-top: 2px solid #374151;
+  padding-top: 2rem;
+}
+
+.reckoning-cluster h3 {
+  color: #ffffff;
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.cluster-label {
+  display: block;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.cluster-articles {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Article cards — dark overrides */
+.reckoning-section .article-card {
+  background: #111827;
+  border: 1px solid #374151;
+  border-radius: 0.25rem;
+  padding: 1.25rem;
+  color: #e5e7eb;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: border-color 200ms ease, transform 100ms ease;
+}
+
+.reckoning-section .article-card:hover {
+  border-color: var(--primary);
+  transform: translateY(-2px);
+}
+
+.reckoning-section .article-card:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.reckoning-section .article-title {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-weight: 700;
+  color: #e5e7eb;
+  line-height: 1.4;
+}
+
+.reckoning-section .article-link {
+  font-size: 0.8125rem;
+  color: #9ca3af;
+  transition: color 200ms ease;
+}
+
+.reckoning-section .article-card:hover .article-link {
+  color: var(--primary);
+}
+
+/* Closing statement */
+.reckoning-close {
+  text-align: center;
+  padding: 6rem 0;
+  max-width: 36rem;
+  margin: 0 auto;
+}
+
+.reckoning-close p {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-style: italic;
+  color: #9ca3af;
+  line-height: 1.8;
+  margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .reckoning-clusters {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .reckoning-thesis {
+    font-size: 1rem;
+  }
+
+  .reckoning-close p {
+    font-size: 1.25rem;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .reckoning-section .article-card {
+    transition-duration: 0.01ms !important;
+  }
+}

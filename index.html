@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="/styles/timeline.css">
   <link rel="stylesheet" href="/styles/map.css">
   <link rel="stylesheet" href="/styles/gallery.css">
+  <link rel="stylesheet" href="/styles/reckoning.css">
   <!-- Mapbox GL JS -->
   <link href='https://api.mapbox.gl/mapbox-gl.css' rel='stylesheet' />
 </head>
@@ -24,8 +25,8 @@
     <div class="hero-overlay"></div>
     <div class="hero-content">
       <h1>The Great Nicobar Paradox</h1>
-      <p>Explore the story of Great Nicobar, where progress meets irreversible loss</p>
-      <button id="start-experience" class="btn btn-primary" aria-label="Start experience - scroll to game section">
+      <p>One of earth's last untouched islands — ancient rainforests, nesting leatherbacks, and a people who have lived here for ten thousand years. Now subject to India's largest infrastructure project.</p>
+      <button id="start-experience" class="btn btn-primary" aria-label="Start experience - scroll to timeline section">
         Start Experience
         <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
       </button>
@@ -34,52 +35,12 @@
   </header>
 
   <main id="main-content">
-  <!-- Game Section -->
-  <section id="game-section" class="section" aria-label="Decision Simulation Game">
-    <div class="container">
-      <div class="section-header">
-        <h2>The Great Nicobar Paradox</h2>
-        <p>Take control of the ₹81,800 crore development project. Can you balance progress with preservation?</p>
-      </div>
-      <div id="game-canvas" role="application" aria-label="Game simulation canvas"></div>
-      <div id="game-status" class="sr-only" aria-live="polite" aria-atomic="true"></div>
-      <div class="game-instructions">
-        <div class="instruction-block">
-          <h3>How to Play</h3>
-          <ul>
-            <li>Manage your ₹81,800 crore budget wisely</li>
-            <li>Balance environmental impact with development needs</li>
-            <li>Maintain public approval through community engagement</li>
-            <li>Make strategic decisions that shape Great Nicobar's future</li>
-          </ul>
-        </div>
-        <div class="instruction-block">
-          <h3>Victory Conditions</h3>
-          <ul>
-            <li>Keep all metrics (Social, Economic, Environmental) above 50%</li>
-            <li>Complete all 10 turns while maintaining balance</li>
-            <li>Stay within your allocated budget</li>
-          </ul>
-        </div>
-        <div class="instruction-block">
-          <h3>Game Controls</h3>
-          <ul>
-            <li>Click decision buttons to take actions</li>
-            <li>Hover over buttons to see detailed effects</li>
-            <li>Monitor your progress through status bars</li>
-            <li>Watch for crisis events that may disrupt your plans</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- Timeline Section -->
-  <section id="timeline" class="section bg-gray" aria-label="Historical Timeline">
+  <section id="timeline" class="section section--timeline" aria-label="Historical Timeline">
     <div class="container">
       <div class="section-header">
         <h2>A Land in Flux</h2>
-        <p>Witness the transformation of Great Nicobar through time, from an untouched paradise to a contested ground of development.</p>
+        <p>These are the decisions that were made about Great Nicobar. Most of them without asking anyone who lives here.</p>
       </div>
       <div class="timeline-container">
         <div class="timeline-line"></div>
@@ -89,12 +50,11 @@
   </section>
 
   <!-- Map Section -->
-  <section id="map-section" class="section" aria-label="Interactive Map Visualization">
+  <section id="map-section" class="section section--map" aria-label="Interactive Map Visualization">
     <div class="container">
       <div class="section-header">
         <h2>The Vanishing Nicobar</h2>
-        <p>Explore the transformation of Great Nicobar Island through different time periods.
-          Toggle layers to visualize the impact of development on this pristine ecosystem.</p>
+        <p>166 square kilometres of primary rainforest. 9.64 lakh trees. One of the world's most active seismic fault lines. Explore what is proposed to be transformed, and what cannot be restored.</p>
       </div>
       <div class="map-container">
         <div class="map-controls">
@@ -116,12 +76,11 @@
   </section>
 
   <!-- Gallery Section -->
-  <section id="endangered-species" class="section" aria-label="Endangered Species Gallery">
+  <section id="endangered-species" class="section section--gallery" aria-label="Endangered Species Gallery">
     <div class="container">
       <div class="section-header">
-        <h2>Vanishing Treasures</h2>
-        <p>Meet the extraordinary creatures of Great Nicobar, each fighting for survival
-          against the tide of development.</p>
+        <h2>Who Lives Here</h2>
+        <p>650+ species whose habitat is the project's footprint. They were not consulted either.</p>
       </div>
       <div class="gallery-filters">
         <!-- Filters will be inserted here by JavaScript -->
@@ -129,15 +88,59 @@
       <div class="species-grid">
         <!-- Species cards will be inserted here by JavaScript -->
       </div>
-      <div class="read-more-section">
-        <div class="read-more-header">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-          <h3>Dive Deeper</h3>
+    </div>
+  </section>
+
+  <!-- Game Section -->
+  <section id="game-section" class="section section--game" aria-label="Decision Simulation Game">
+    <div class="container">
+      <div class="section-header">
+        <h2>You Have &#8377;81,800 Crore. Ten Decisions.</h2>
+        <p>Every rupee you spend changes something. Nothing stays unchanged. Try to hold it together.</p>
+      </div>
+      <div id="game-board" class="game-board" role="region" aria-label="Decision simulation game board"></div>
+      <div id="game-status" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+      <div class="game-instructions">
+        <div class="instruction-block">
+          <h3>How to Play</h3>
+          <ul>
+            <li>Manage your &#8377;81,800 crore budget wisely</li>
+            <li>Balance environmental impact with development needs</li>
+            <li>Maintain public approval through community engagement</li>
+            <li>Make strategic decisions that shape Great Nicobar's future</li>
+          </ul>
         </div>
-        <p>Explore comprehensive coverage of the Great Nicobar development project and its impact on this unique ecosystem:</p>
-        <div class="article-grid">
-          <!-- Article cards will be inserted here by JavaScript -->
+        <div class="instruction-block">
+          <h3>What You're Trying to Do</h3>
+          <ul>
+            <li>Keep all metrics (Social, Economic, Environmental) above 50%</li>
+            <li>Complete all 10 turns while maintaining balance</li>
+            <li>Stay within your allocated budget</li>
+          </ul>
         </div>
+        <div class="instruction-block">
+          <h3>Game Controls</h3>
+          <ul>
+            <li>Click decision buttons to take actions</li>
+            <li>Hover over buttons to see detailed effects</li>
+            <li>Monitor your progress through status bars</li>
+            <li>Watch for crisis events that may disrupt your plans</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Reckoning Section -->
+  <section id="reckoning" class="section section--reckoning reckoning-section" aria-label="Reckoning">
+    <div class="container">
+      <div class="section-header reckoning-header">
+        <h2>The State Always Wins</h2>
+        <p>You played the game. You tried different choices. The outcome was always the same —
+           because the decision was made before you ever arrived.</p>
+      </div>
+      <div class="reckoning-content">
+        <!-- Populated by Reckoning.js -->
       </div>
     </div>
   </section>
@@ -150,8 +153,7 @@
   </div>
 
   <!-- Scripts -->
-  <!-- Load external CDN dependencies (globals: Phaser, mapboxgl) -->
-  <script src="https://cdn.jsdelivr.net/npm/phaser@3.80.1/dist/phaser.min.js"></script>
+  <!-- Load external CDN dependencies (globals: mapboxgl) -->
   <script src='https://api.mapbox.gl/mapbox-gl-js.min.js'></script>
 
   <!-- Application entry point (ES6 module) -->
