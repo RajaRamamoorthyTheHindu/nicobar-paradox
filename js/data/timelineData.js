@@ -51,7 +51,11 @@ export const timelineData = [
     year: 2021,
     title: "Environmental Concerns Surface",
     description: "Scientists and activists raise alarms about the project's impact on biodiversity and indigenous communities.",
-    image: "https://images.unsplash.com/photo-1516690561799-46d8f74f9abf"
+    image: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05",
+    quote: {
+      text: "We are risking an ecological collapse of one of the world's most sensitive island ecosystems.",
+      author: "Environmental Scientists' Letter to MoEFCC"
+    }
   },
   {
     year: 2024,

@@ -95,9 +95,10 @@ export class Gallery {
     card.className = 'species-card';
 
     const img = document.createElement('img');
-    img.src = species.image;
+    img.src = species.image + '?auto=format&fit=crop&w=400&q=80';
     img.alt = species.name;
     img.className = 'species-image';
+    img.loading = 'lazy';
     card.appendChild(img);
 
     // Visible name and status below image (always shown)
@@ -186,7 +187,7 @@ export class Gallery {
       modalContent.className = 'modal-content species-modal-content';
 
       const modalImg = document.createElement('img');
-      modalImg.src = species.image;
+      modalImg.src = species.image + '?auto=format&fit=crop&w=1024&q=80';
       modalImg.alt = species.name;
       modalImg.className = 'modal-image';
       modalContent.appendChild(modalImg);

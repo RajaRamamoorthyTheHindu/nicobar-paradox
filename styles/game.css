@@ -1,10 +1,11 @@
 /* Game Section Styles — DOM-based game board */
 
 .game-board {
-  background: #1f2937;
+  background: #111827;
+  border: 1px solid #374151;
   border-radius: 0.75rem;
   padding: 2rem;
-  color: #e5e7eb;
+  color: #f3f4f6;
   max-width: 1024px;
   margin: 0 auto 3rem;
   overflow: hidden;
@@ -173,8 +174,8 @@
 }
 
 .game-decision-card {
-  background: #111827;
-  border: 1px solid #374151;
+  background: #1f2937;
+  border: 1px solid #4b5563;
   border-radius: 0.5rem;
   padding: 1.25rem;
   color: #e5e7eb;
@@ -244,7 +245,7 @@
 
 .game-decision-desc {
   font-size: 0.8125rem;
-  color: #6b7280;
+  color: #9ca3af;
   line-height: 1.4;
   margin-top: 0.25rem;
 }
@@ -284,7 +285,7 @@
 }
 
 .game-history-turn {
-  color: #6b7280;
+  color: #9ca3af;
   flex-shrink: 0;
   width: 3.5rem;
 }
@@ -339,7 +340,7 @@
 .game-endstate-stat-label {
   display: block;
   font-size: 0.75rem;
-  color: #6b7280;
+  color: #9ca3af;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   margin-bottom: 0.25rem;
@@ -383,7 +384,7 @@
 
 .game-endstate-coda {
   font-size: 1rem;
-  color: #6b7280;
+  color: #9ca3af;
   font-style: italic;
   margin-bottom: 2.5rem;
   line-height: 1.8;
@@ -438,19 +439,49 @@
   outline-offset: 2px;
 }
 
-/* Game instructions — dark theme overrides */
-.section--game .game-instructions {
+/* Game instructions */
+.game-instructions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  margin-top: 3rem;
+  padding: 2rem;
+  border: 1px solid #374151;
+  border-radius: 0.5rem;
   background: #111827;
-  border-color: #374151;
-  color: #e5e7eb;
 }
 
-.section--game .instruction-block h3 {
-  color: #e5e7eb;
+.instruction-block h3 {
+  font-family: var(--font-serif);
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #f3f4f6;
+  margin-bottom: 0.75rem;
 }
 
-.section--game .instruction-block li {
-  color: #9ca3af;
+.instruction-block ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.instruction-block li {
+  position: relative;
+  padding: 0.375rem 0 0.375rem 1.25rem;
+  color: #d1d5db;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+.instruction-block li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.8rem;
+  width: 0.375rem;
+  height: 0.375rem;
+  border-radius: 50%;
+  background: var(--primary);
 }
 
 /* Responsive */
