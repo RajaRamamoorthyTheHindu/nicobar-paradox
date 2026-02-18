@@ -58,13 +58,13 @@ export const gameLogic = {
    */
   getEndMessage(reason) {
     const messages = {
-      social: 'Social fabric torn apart. Communities scattered, traditions lost forever.',
-      ecology: 'Ecological collapse. Ancient forests give way to concrete and steel.',
-      economic: 'Economic promises unfulfilled. Development at any cost proves costly.',
-      budget: 'Budget depleted. The price of progress exceeds all estimates.',
-      turns: 'Time runs out. Progress marches on, leaving destruction in its wake.'
+      social: 'The communities here were never part of the plan. No allocation of funds changes whose land this is.',
+      ecology: 'You cannot build a deep-water port in a primary rainforest without destroying it. There was no version where this didn\'t happen.',
+      economic: 'The numbers were never meant to add up for the people who live here.',
+      budget: 'The costs were always underestimated. That was not an accident.',
+      turns: 'The project timeline was fixed before the first public consultation was held.'
     };
-    return messages[reason] || 'A precarious balance achieved, but at what cost to the island\'s soul?';
+    return messages[reason] || 'The outcome was determined before the first decision was made.';
   },
 
   /**

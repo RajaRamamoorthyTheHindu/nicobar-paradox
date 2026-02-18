@@ -15,7 +15,7 @@ export class Hero {
   init() {
     const startButton = document.getElementById('start-experience');
     startButton.addEventListener('click', () => {
-      document.getElementById('game-section').scrollIntoView({ behavior: 'smooth' });
+      document.getElementById('timeline').scrollIntoView({ behavior: 'smooth' });
     });
 
     this.observeSection();

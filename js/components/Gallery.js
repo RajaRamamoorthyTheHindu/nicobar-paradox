@@ -100,6 +100,20 @@ export class Gallery {
     img.className = 'species-image';
     card.appendChild(img);
 
+    // Visible name and status below image (always shown)
+    const cardInfo = document.createElement('div');
+    cardInfo.className = 'species-card-info';
+    const cardName = document.createElement('h3');
+    cardName.className = 'species-name';
+    cardName.textContent = species.name;
+    cardInfo.appendChild(cardName);
+    const cardStatus = document.createElement('span');
+    cardStatus.className = 'species-status';
+    cardStatus.textContent = species.status;
+    cardInfo.appendChild(cardStatus);
+    card.appendChild(cardInfo);
+
+    // Hover overlay with description
     const overlay = document.createElement('div');
     overlay.className = 'species-overlay';
     card.appendChild(overlay);
@@ -107,47 +121,10 @@ export class Gallery {
     const info = document.createElement('div');
     info.className = 'species-info';
 
-    const name = document.createElement('h3');
-    name.className = 'species-name';
-    name.textContent = species.name;
-    info.appendChild(name);
-
     const desc = document.createElement('p');
     desc.className = 'species-description';
     desc.textContent = species.shortDescription;
     info.appendChild(desc);
-
-    const status = document.createElement('div');
-    status.className = 'species-status';
-    const statusSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    statusSvg.setAttribute('width', '16');
-    statusSvg.setAttribute('height', '16');
-    statusSvg.setAttribute('viewBox', '0 0 24 24');
-    statusSvg.setAttribute('fill', 'none');
-    statusSvg.setAttribute('stroke', 'currentColor');
-    statusSvg.setAttribute('stroke-width', '2');
-    statusSvg.setAttribute('stroke-linecap', 'round');
-    statusSvg.setAttribute('stroke-linejoin', 'round');
-    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-    circle.setAttribute('cx', '12');
-    circle.setAttribute('cy', '12');
-    circle.setAttribute('r', '10');
-    const line1 = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-    line1.setAttribute('x1', '12');
-    line1.setAttribute('y1', '8');
-    line1.setAttribute('x2', '12');
-    line1.setAttribute('y2', '12');
-    const line2 = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-    line2.setAttribute('x1', '12');
-    line2.setAttribute('y1', '16');
-    line2.setAttribute('x2', '12.01');
-    line2.setAttribute('y2', '16');
-    statusSvg.appendChild(circle);
-    statusSvg.appendChild(line1);
-    statusSvg.appendChild(line2);
-    status.appendChild(statusSvg);
-    status.appendChild(document.createTextNode(species.status));
-    info.appendChild(status);
 
     card.appendChild(info);
 

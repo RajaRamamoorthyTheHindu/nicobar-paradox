@@ -11,6 +11,7 @@ import { Game } from './components/Game.js';
 import { Timeline } from './components/Timeline.js';
 import { MapComponent } from './components/Map.js';
 import { Gallery } from './components/Gallery.js';
+import { Reckoning } from './components/Reckoning.js';
 
 // Global error handlers
 window.addEventListener('error', (event) => {
@@ -34,20 +35,14 @@ document.addEventListener('DOMContentLoaded', () => {
     logError('Hero', error);
   }
 
-  // Game — requires Phaser CDN
-  const gameContainer = document.getElementById('game-canvas');
+  // Game — DOM-based, no external dependencies
+  const gameContainer = document.getElementById('game-board');
   if (gameContainer) {
-    if (!isCDNAvailable('Phaser')) {
-      logError('Game', new Error('Phaser library not loaded from CDN'));
-      renderFallback(gameContainer, 'Game Simulation',
-        'The game engine (Phaser) could not be loaded. Please check your internet connection and try refreshing.');
-    } else {
-      try {
-        new Game();
-      } catch (error) {
-        logError('Game', error);
-        renderFallback(gameContainer, 'Game Simulation');
-      }
+    try {
+      new Game();
+    } catch (error) {
+      logError('Game', error);
+      renderFallback(gameContainer, 'Game Simulation');
     }
   }
 
@@ -87,6 +82,15 @@ document.addEventListener('DOMContentLoaded', () => {
       logError('Gallery', error);
       const speciesGrid = document.querySelector('.species-grid');
       renderFallback(speciesGrid, 'Species Gallery');
+    }
+  }
+
+  // Reckoning — no external dependencies
+  if (document.getElementById('reckoning')) {
+    try {
+      new Reckoning();
+    } catch (error) {
+      logError('Reckoning', error);
     }
   }
 });

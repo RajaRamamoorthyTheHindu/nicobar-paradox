@@ -101,32 +101,32 @@ describe('gameLogic', () => {
   describe('getEndMessage', () => {
     it('returns social collapse message', () => {
       const msg = gameLogic.getEndMessage('social');
-      expect(msg).toContain('Social fabric');
+      expect(msg).toContain('communities here');
     });
 
     it('returns ecology collapse message', () => {
       const msg = gameLogic.getEndMessage('ecology');
-      expect(msg).toContain('Ecological collapse');
+      expect(msg).toContain('cannot build');
     });
 
     it('returns economic collapse message', () => {
       const msg = gameLogic.getEndMessage('economic');
-      expect(msg).toContain('Economic promises');
+      expect(msg).toContain('never meant to add up');
     });
 
     it('returns budget depletion message', () => {
       const msg = gameLogic.getEndMessage('budget');
-      expect(msg).toContain('Budget depleted');
+      expect(msg).toContain('underestimated');
     });
 
     it('returns turn expiration message', () => {
       const msg = gameLogic.getEndMessage('turns');
-      expect(msg).toContain('Time runs out');
+      expect(msg).toContain('timeline was fixed');
     });
 
     it('returns default message for unknown reason', () => {
       const msg = gameLogic.getEndMessage('unknown');
-      expect(msg).toContain('precarious balance');
+      expect(msg).toContain('determined before');
     });
   });
 

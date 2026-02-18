@@ -6,24 +6,22 @@
 }
 
 .map-controls {
-  width: 25%;
-  min-width: 250px;
+  width: 22%;
+  min-width: 240px;
 }
 
 #map {
   flex-grow: 1;
   height: 600px;
-  border-radius: 0.5rem;
+  border-radius: 0.25rem;
   overflow: hidden;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
 .map-layers {
   background: white;
   padding: 1.5rem;
-  border-radius: 0.5rem;
+  border-radius: 0.25rem;
   border: 1px solid var(--border);
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
 }
 
 .map-layers h3 {
@@ -47,7 +45,7 @@
   justify-content: space-between;
   padding: 0.75rem;
   margin-bottom: 0.5rem;
-  border-radius: 0.5rem;
+  border-radius: 0.25rem;
   background: transparent;
   border: none;
   cursor: pointer;
